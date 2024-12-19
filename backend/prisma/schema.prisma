@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model banners {
+  bannerId   Int       @id @default(autoincrement())
+  movieId    Int?
+  banner     String?   @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  updated_at DateTime? @default(now()) @db.Timestamp(0)
+  movies     movies?   @relation(fields: [movieId], references: [movieId], onDelete: NoAction, onUpdate: NoAction, map: "banners_ibfk_1")
+
+  @@index([movieId], map: "movieId")
+}
+
+model booking {
+  bookingId  Int        @id @default(autoincrement())
+  userId     Int?
+  scheduleId Int?
+  seatId     Int?
+  created_at DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at DateTime?  @default(now()) @db.Timestamp(0)
+  users      users?     @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_1")
+  schedules  schedules? @relation(fields: [scheduleId], references: [scheduleId], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_2")
+  seats      seats?     @relation(fields: [seatId], references: [seatId], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_3")
+
+  @@index([scheduleId], map: "scheduleId")
+  @@index([seatId], map: "seatId")
+  @@index([userId], map: "userId")
+}
+
+model cinemachains {
+  cinemaChainId   Int       @id @default(autoincrement())
+  cinemaChainName String?   @db.VarChar(255)
+  logo            String?   @db.VarChar(255)
+  created_at      DateTime? @default(now()) @db.Timestamp(0)
+  updated_at      DateTime? @default(now()) @db.Timestamp(0)
+  cinemas         cinemas[]
+}
+
+model cinemarooms {
+  cinemaRoomId   Int         @id @default(autoincrement())
+  cinemaRoomName String?     @db.VarChar(255)
+  cinemaId       Int?
+  created_at     DateTime?   @default(now()) @db.Timestamp(0)
+  updated_at     DateTime?   @default(now()) @db.Timestamp(0)
+  cinemas        cinemas?    @relation(fields: [cinemaId], references: [cinemaId], onDelete: NoAction, onUpdate: NoAction, map: "cinemarooms_ibfk_1")
+  schedules      schedules[]
+  seats          seats[]
+
+  @@index([cinemaId], map: "cinemaId")
+}
+
+model cinemas {
+  cinemaId      Int           @id @default(autoincrement())
+  cinemaName    String?       @db.VarChar(255)
+  cinemaAddress String?       @db.VarChar(255)
+  cinemaChainId Int?
+  created_at    DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at    DateTime?     @default(now()) @db.Timestamp(0)
+  cinemarooms   cinemarooms[]
+  cinemachains  cinemachains? @relation(fields: [cinemaChainId], references: [cinemaChainId], onDelete: NoAction, onUpdate: NoAction, map: "cinemas_ibfk_1")
+
+  @@index([cinemaChainId], map: "cinemaChainId")
+}
+
+model movies {
+  movieId    Int         @id @default(autoincrement())
+  movieName  String?     @db.VarChar(255)
+  trailer    String?     @db.VarChar(255)
+  images     String?     @db.VarChar(255)
+  desc       String?     @db.VarChar(255)
+  releaseDay DateTime?   @db.Date
+  rate       String?     @db.VarChar(255)
+  hot        Boolean?
+  nowShowing String?     @db.VarChar(255)
+  comingSoon String?     @db.VarChar(255)
+  created_at DateTime?   @default(now()) @db.Timestamp(0)
+  updated_at DateTime?   @default(now()) @db.Timestamp(0)
+  banners    banners[]
+  schedules  schedules[]
+}
+
+model schedules {
+  scheduleId   Int          @id @default(autoincrement())
+  cinemaRoomId Int?
+  movieId      Int?
+  showtime     DateTime?    @db.DateTime(0)
+  ticketPrice  Int?
+  created_at   DateTime?    @default(now()) @db.Timestamp(0)
+  updated_at   DateTime?    @default(now()) @db.Timestamp(0)
+  booking      booking[]
+  cinemarooms  cinemarooms? @relation(fields: [cinemaRoomId], references: [cinemaRoomId], onDelete: NoAction, onUpdate: NoAction, map: "schedules_ibfk_1")
+  movies       movies?      @relation(fields: [movieId], references: [movieId], onDelete: NoAction, onUpdate: NoAction, map: "schedules_ibfk_2")
+
+  @@index([cinemaRoomId], map: "cinemaRoomId")
+  @@index([movieId], map: "movieId")
+}
+
+model seats {
+  seatId       Int          @id @default(autoincrement())
+  seatName     String?      @db.VarChar(255)
+  seatType     String?      @db.VarChar(255)
+  cinemaRoomId Int?
+  created_at   DateTime?    @default(now()) @db.Timestamp(0)
+  updated_at   DateTime?    @default(now()) @db.Timestamp(0)
+  booking      booking[]
+  cinemarooms  cinemarooms? @relation(fields: [cinemaRoomId], references: [cinemaRoomId], onDelete: NoAction, onUpdate: NoAction, map: "seats_ibfk_1")
+
+  @@index([cinemaRoomId], map: "cinemaRoomId")
+}
+
+model users {
+  userId      Int       @id @default(autoincrement())
+  email       String?   @db.VarChar(255)
+  fullName    String?   @db.VarChar(255)
+  phoneNumber String?   @db.VarChar(255)
+  password    String?   @db.VarChar(255)
+  userType    String?   @db.VarChar(255)
+  created_at  DateTime? @default(now()) @db.Timestamp(0)
+  updated_at  DateTime? @default(now()) @db.Timestamp(0)
+  booking     booking[]
+}
