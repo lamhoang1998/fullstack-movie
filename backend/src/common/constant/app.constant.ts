@@ -1,0 +1,3 @@
+export const CLOUDINARY_SECRET_KEY = process.env.CLOUDINARY_SECRET_KEY;
+
+console.log({ CLOUDINARY_SECRET_KEY });
