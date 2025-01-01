@@ -6,20 +6,6 @@ import { PrismaService } from 'src/common/prisma/init.prisma';
 import { User, UserPayload } from 'src/common/types/users.types';
 import 'passport';
 
-declare module 'passport' {
-  namespace Express {
-    interface User {
-      userId: number;
-      email: string | null;
-      fullName: string | null;
-      phoneNumber: string | null;
-      role_id: number | null;
-      created_at: Date | null;
-      updated_at: Date | null;
-    }
-  }
-}
-
 declare global {
   namespace Express {
     interface User {
@@ -28,7 +14,7 @@ declare global {
       fullName: string | null;
       phoneNumber: string | null;
       avatar: string | null;
-      userType: string | null;
+      role_id: number | null;
       created_at: Date | null;
       updated_at: Date | null;
     }

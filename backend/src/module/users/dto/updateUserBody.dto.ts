@@ -1,15 +1,19 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class RegisterDto {
+export class UpdateUserDto {
+  @IsOptional()
   @IsString()
   fullName: string;
-  @IsString()
-  email: string;
-  @IsString()
-  phoneNumber: string;
-  @IsString()
-  password: string;
 
   @IsOptional()
-  role_id: number;
+  @IsString()
+  email: string;
+
+  @IsOptional()
+  @IsString()
+  phoneNumber: string;
+
+  @IsOptional()
+  @IsString()
+  password: string;
 }

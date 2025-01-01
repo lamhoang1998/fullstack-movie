@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/prisma/init.prisma';
 import { UserPerPage } from './dto/userPerPage.dto';
 import { SearchUser, SearchUserPerPage } from './dto/searchUser.dto';
+import { UpdateUserDto } from './dto/updateUserBody.dto';
+import { Request } from 'express';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -104,5 +107,49 @@ export class UsersService {
     });
 
     return allRoles;
+  }
+
+  async updateUsers(updateUserBody: UpdateUserDto, req: Request) {
+    console.log({ updateUserBody });
+    console.log({ user: req.user });
+
+    const fullName = updateUserBody.fullName
+      ? updateUserBody.fullName
+      : req.user.fullName;
+
+    const email = updateUserBody.email ? updateUserBody.email : req.user.email;
+
+    const phoneNumber = updateUserBody.phoneNumber
+      ? updateUserBody.phoneNumber
+      : req.user.phoneNumber;
+
+    if (updateUserBody.password) {
+      const hashPassword = bcrypt.hashSync(updateUserBody.password, 10);
+
+      const updatedUser = this.prisma.users.update({
+        where: { userId: req.user.userId },
+        data: {
+          email: email,
+          fullName: fullName,
+          phoneNumber: phoneNumber,
+          password: hashPassword,
+        },
+        omit: { password: true },
+      });
+
+      return updatedUser;
+    } else {
+      const updatedUser = this.prisma.users.update({
+        where: { userId: req.user.userId },
+        data: {
+          email: email,
+          fullName: fullName,
+          phoneNumber: phoneNumber,
+        },
+        omit: { password: true },
+      });
+
+      return updatedUser;
+    }
   }
 }
