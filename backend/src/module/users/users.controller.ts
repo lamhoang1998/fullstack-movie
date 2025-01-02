@@ -34,6 +34,11 @@ export class UsersController {
     return this.usersService.getAllRoles();
   }
 
+  @Get(`get-user-info`)
+  getUserInfo(@Req() req: Request) {
+    return this.usersService.getUserInfo(req);
+  }
+
   @Put(`update-users`)
   updateUsers(@Body() updateUserBody: UpdateUserDto, @Req() req: Request) {
     return this.usersService.updateUsers(updateUserBody, req);

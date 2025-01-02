@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Req,
   UploadedFile,
@@ -28,5 +29,15 @@ export class MoviesController {
     @Req() req: Request,
   ) {
     return this.moviesService.addMovie(file, movieBody, req);
+  }
+
+  @Get(`get-movies`)
+  getMovies() {
+    return this.moviesService.getMovies();
+  }
+
+  @Get(`get-movies-per-page`)
+  getMoviesPerPage() {
+    return this.moviesService.getMoviesPerPage();
   }
 }

@@ -5,6 +5,7 @@ import { SearchUser, SearchUserPerPage } from './dto/searchUser.dto';
 import { UpdateUserDto } from './dto/updateUserBody.dto';
 import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
+import { use } from 'passport';
 
 @Injectable()
 export class UsersService {
@@ -107,6 +108,19 @@ export class UsersService {
     });
 
     return allRoles;
+  }
+
+  async getUserInfo(req: Request) {
+    const userInfo = this.prisma.users.findUnique({
+      where: {
+        userId: req.user.userId,
+      },
+      omit: {
+        password: true,
+      },
+    });
+
+    return userInfo;
   }
 
   async updateUsers(updateUserBody: UpdateUserDto, req: Request) {

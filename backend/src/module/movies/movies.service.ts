@@ -14,8 +14,6 @@ export class MoviesService {
     movieBody: AddMovieDto,
     req: Request,
   ) {
-    console.log({ file });
-    console.log({ movieBody });
     const releaseDate = convertDate(movieBody.releaseDate);
 
     const newMovie = await this.prisma.movies.create({
@@ -31,6 +29,15 @@ export class MoviesService {
         comingSoon: movieBody.comingSoon,
       },
     });
-    return `movie`;
+    return newMovie;
+  }
+
+  async getMovies() {
+    const movies = this.prisma.movies.findMany();
+    return movies;
+  }
+
+  async getMoviesPerPage() {
+    return `MoviesPerPage`;
   }
 }
