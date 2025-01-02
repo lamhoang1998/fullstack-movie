@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Req,
   UploadedFile,
   UploadedFiles,
@@ -16,6 +17,7 @@ import {
 import { AddMovieDto } from './dto/add-movie.dto';
 import storageImageCloud from 'src/common/multer/upload-image-cloud.multer';
 import { Request } from 'express';
+import { MoviesPerPage } from './dto/movie-per-page.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -37,7 +39,7 @@ export class MoviesController {
   }
 
   @Get(`get-movies-per-page`)
-  getMoviesPerPage() {
-    return this.moviesService.getMoviesPerPage();
+  getMoviesPerPage(@Query() moviePerPage: MoviesPerPage) {
+    return this.moviesService.getMoviesPerPage(moviePerPage);
   }
 }
