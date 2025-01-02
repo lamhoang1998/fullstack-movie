@@ -62,4 +62,8 @@ export class MoviesService {
       items: moviesPerPage || [],
     };
   }
+
+  async updateMovies() {
+    return `updateMovies`;
+  }
 }
