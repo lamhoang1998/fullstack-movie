@@ -6,6 +6,7 @@ import { convertDate } from 'src/utils/convertDate.utils';
 import { convertBoolean } from 'src/utils/convertBoolean.utils';
 import { MoviesPerPage } from './dto/movie-per-page.dto';
 import { MovieByDateDto } from './dto/movie-by-date.dto';
+import { getPage, getPageSize, getTotalPage } from 'src/utils/page.utils';
 
 @Injectable()
 export class MoviesService {
@@ -40,12 +41,13 @@ export class MoviesService {
   }
 
   async getMoviesPerPage(moviePerPage: MoviesPerPage) {
-    const page = moviePerPage.page ? +moviePerPage.page : 1;
-    const pageSize = moviePerPage.pageSize ? +moviePerPage.pageSize : 3;
+    const page = getPage(moviePerPage.page);
 
-    const totalItem = await this.prisma.movies.count();
+    const pageSize = getPageSize(moviePerPage.pageSize);
 
-    const totalPage = Math.ceil(totalItem / pageSize);
+    const totalItems = await this.prisma.movies.count();
+
+    const totalPage = getTotalPage(totalItems, pageSize);
 
     const moviesPerPage = await this.prisma.movies.findMany({
       take: pageSize,
@@ -58,16 +60,29 @@ export class MoviesService {
     return {
       pageSize,
       page,
-      totalItem,
+      totalItems,
       totalPage,
       items: moviesPerPage || [],
     };
   }
 
   async getMoviesByDates(movieByDate: MovieByDateDto) {
-    console.log({ movieByDate });
+    const page = getPage(movieByDate.page);
 
-    const moviesByDate = this.prisma.movies.findMany({
+    const pageSize = getPageSize(movieByDate.pageSize);
+
+    const totalItems = await this.prisma.movies.count({
+      where: {
+        releaseDay: {
+          gte: new Date(movieByDate.startDate),
+          lte: new Date(movieByDate.endDate),
+        },
+      },
+    });
+
+    const totalPage = getTotalPage(totalItems, pageSize);
+
+    const moviesByDate = await this.prisma.movies.findMany({
       where: {
         releaseDay: {
           gte: new Date(movieByDate.startDate),
@@ -79,7 +94,13 @@ export class MoviesService {
       },
     });
 
-    return moviesByDate;
+    return {
+      pageSize,
+      page,
+      totalItems,
+      totalPage,
+      items: moviesByDate,
+    };
   }
 
   async updateMovies() {
