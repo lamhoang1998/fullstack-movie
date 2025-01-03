@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { convertDate } from 'src/utils/convertDate.utils';
 import { convertBoolean } from 'src/utils/convertBoolean.utils';
 import { MoviesPerPage } from './dto/movie-per-page.dto';
+import { MovieByDateDto } from './dto/movie-by-date.dto';
 
 @Injectable()
 export class MoviesService {
@@ -61,6 +62,24 @@ export class MoviesService {
       totalPage,
       items: moviesPerPage || [],
     };
+  }
+
+  async getMoviesByDates(movieByDate: MovieByDateDto) {
+    console.log({ movieByDate });
+
+    const moviesByDate = this.prisma.movies.findMany({
+      where: {
+        releaseDay: {
+          gte: new Date(movieByDate.startDate),
+          lte: new Date(movieByDate.endDate),
+        },
+      },
+      orderBy: {
+        releaseDay: `asc`,
+      },
+    });
+
+    return moviesByDate;
   }
 
   async updateMovies() {

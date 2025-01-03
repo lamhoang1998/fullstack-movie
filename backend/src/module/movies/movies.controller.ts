@@ -21,6 +21,7 @@ import { Request } from 'express';
 import { MoviesPerPage } from './dto/movie-per-page.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from '../auth/enum/role.enum';
+import { MovieByDateDto } from './dto/movie-by-date.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -44,6 +45,11 @@ export class MoviesController {
   @Get(`get-movies-per-page`)
   getMoviesPerPage(@Query() moviePerPage: MoviesPerPage) {
     return this.moviesService.getMoviesPerPage(moviePerPage);
+  }
+
+  @Get(`get-movies-by-date`)
+  getMoviesByDates(@Query() movieByDate: MovieByDateDto) {
+    return this.moviesService.getMoviesByDates(movieByDate);
   }
 
   @Roles(Role.Admin)

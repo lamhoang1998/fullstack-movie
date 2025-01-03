@@ -2,8 +2,10 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role } from './enum/role.enum';
 import { ROLES_KEY } from 'src/common/decorators/roles.decorator';
+
 import { User } from 'src/common/types/users.types';
 
+//check user's role
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -13,19 +15,17 @@ export class RolesGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+
+    //if no role required, let user use this api request by return true
     if (!requiredRoles) {
       return true;
     }
-    // const { user } = context.switchToHttp().getRequest();
 
-    // console.log(requiredRoles);
-
-    // console.log({ user });
+    //if role is required, check if the role of user matches the role required to acess to this api
 
     const req = context.switchToHttp().getRequest();
-    const user: Partial<User> = req.user;
+    const user: User = req.user;
 
-    // return requiredRoles.some((role) => user.role === role);
     return requiredRoles.some((role) => role === user.role_id);
   }
 }
