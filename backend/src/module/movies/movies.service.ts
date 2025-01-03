@@ -8,6 +8,7 @@ import { MoviesPerPage } from './dto/movie-per-page.dto';
 import { MovieByDateDto } from './dto/movie-by-date.dto';
 import { getPage, getPageSize, getTotalPage } from 'src/utils/page.utils';
 import { MovieQueryDto, UpdateMovieDto } from './dto/update-movie.dto';
+import { deleteCloudImage } from 'src/common/multer/upload-image-cloud.multer';
 
 @Injectable()
 export class MoviesService {
@@ -110,13 +111,13 @@ export class MoviesService {
     req: Request,
     movie: MovieQueryDto,
   ) {
-    console.log({ movieBody });
     const movieById = await this.prisma.movies.findUnique({
       where: {
         movieId: +movie.movieId,
       },
     });
-    console.log({ movieById });
+
+    if (file) deleteCloudImage(movieById.images);
 
     const movieName = movieBody.movieName
       ? movieBody.movieName
@@ -137,10 +138,6 @@ export class MoviesService {
       movieBody.comingSoon === undefined
         ? movieById.comingSoon
         : movieBody.comingSoon;
-
-    console.log({ hot });
-    console.log({ nowShowing });
-    console.log({ comingSoon });
 
     const updatedMovie = await this.prisma.movies.update({
       where: {
