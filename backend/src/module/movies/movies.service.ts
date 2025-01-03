@@ -7,6 +7,7 @@ import { convertBoolean } from 'src/utils/convertBoolean.utils';
 import { MoviesPerPage } from './dto/movie-per-page.dto';
 import { MovieByDateDto } from './dto/movie-by-date.dto';
 import { getPage, getPageSize, getTotalPage } from 'src/utils/page.utils';
+import { MovieQueryDto, UpdateMovieDto } from './dto/update-movie.dto';
 
 @Injectable()
 export class MoviesService {
@@ -103,7 +104,61 @@ export class MoviesService {
     };
   }
 
-  async updateMovies() {
-    return `updateMovies`;
+  async updateMovies(
+    file: Express.Multer.File,
+    movieBody: UpdateMovieDto,
+    req: Request,
+    movie: MovieQueryDto,
+  ) {
+    console.log({ movieBody });
+    const movieById = await this.prisma.movies.findUnique({
+      where: {
+        movieId: +movie.movieId,
+      },
+    });
+    console.log({ movieById });
+
+    const movieName = movieBody.movieName
+      ? movieBody.movieName
+      : movieById.movieName;
+    const trailer = movieBody.trailer ? movieBody.trailer : movieById.trailer;
+    const images = file ? file.filename : movieById.images;
+    const desc = movieBody.desc ? movieBody.desc : movieById.desc;
+    const releaseDate = movieBody.releaseDate
+      ? convertDate(movieBody.releaseDate)
+      : movieById.releaseDay;
+    const rate = movieBody.rate;
+    const hot = movieBody.hot === undefined ? movieById.hot : movieBody.hot;
+    const nowShowing =
+      movieBody.nowShowing == undefined
+        ? movieById.nowShowing
+        : movieBody.nowShowing;
+    const comingSoon =
+      movieBody.comingSoon === undefined
+        ? movieById.comingSoon
+        : movieBody.comingSoon;
+
+    console.log({ hot });
+    console.log({ nowShowing });
+    console.log({ comingSoon });
+
+    const updatedMovie = await this.prisma.movies.update({
+      where: {
+        movieId: +movie.movieId,
+      },
+      data: {
+        movieName: movieName,
+        trailer: trailer,
+        images: images,
+        desc: desc,
+        releaseDay: releaseDate,
+        rate: rate,
+        hot: hot,
+        nowShowing: nowShowing,
+        comingSoon: comingSoon,
+      },
+    });
+
+    return updatedMovie;
   }
 }

@@ -22,11 +22,13 @@ import { MoviesPerPage } from './dto/movie-per-page.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from '../auth/enum/role.enum';
 import { MovieByDateDto } from './dto/movie-by-date.dto';
+import { MovieQueryDto, UpdateMovieDto } from './dto/update-movie.dto';
 
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
+  @Roles(Role.Admin)
   @Post(`add-movies`)
   @UseInterceptors(FileInterceptor('images', { storage: storageImageCloud }))
   addMovie(
@@ -54,5 +56,13 @@ export class MoviesController {
 
   @Roles(Role.Admin)
   @Put(`update-movies`)
-  updateMovies() {}
+  @UseInterceptors(FileInterceptor('images', { storage: storageImageCloud }))
+  updateMovies(
+    @UploadedFile() file: Express.Multer.File | undefined,
+    @Body() movieBody: UpdateMovieDto,
+    @Req() req: Request,
+    @Query() movie: MovieQueryDto,
+  ) {
+    return this.moviesService.updateMovies(file, movieBody, req, movie);
+  }
 }
