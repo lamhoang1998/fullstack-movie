@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/updateUserBody.dto';
 import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
 import { use } from 'passport';
+import { getPage, getPageSize, getTotalPage } from 'src/utils/page.utils';
 
 @Injectable()
 export class UsersService {
@@ -26,12 +27,13 @@ export class UsersService {
   }
 
   async getUserPerPage(pageQuery: UserPerPage) {
-    const page = pageQuery.page ? +pageQuery.page : 1;
-    const pageSize = pageQuery.pageSize ? +pageQuery.pageSize : 3;
+    const page = getPage(pageQuery.page);
+
+    const pageSize = getPageSize(pageQuery.pageSize);
 
     const totalItem = await this.prisma.users.count();
 
-    const totalPage = Math.ceil(totalItem / pageSize);
+    const totalPage = getTotalPage(totalItem, pageSize);
 
     const userPerPage = await this.prisma.users.findMany({
       take: pageSize,
@@ -63,8 +65,8 @@ export class UsersService {
   }
 
   async searchUserPerPage(userPerPage: SearchUserPerPage) {
-    const page = userPerPage.page ? +userPerPage.page : 1;
-    const pageSize = userPerPage.pageSize ? +userPerPage.pageSize : 3;
+    const page = getPage(userPerPage.page);
+    const pageSize = getPageSize(userPerPage.pageSize);
 
     const totalItem = await this.prisma.users.count({
       where: {
@@ -74,7 +76,7 @@ export class UsersService {
       },
     });
 
-    const totalPage = Math.ceil(totalItem / pageSize);
+    const totalPage = getTotalPage(totalItem, pageSize);
 
     const userSearchedPerPage = await this.prisma.users.findMany({
       where: {
@@ -124,9 +126,6 @@ export class UsersService {
   }
 
   async updateUsers(updateUserBody: UpdateUserDto, req: Request) {
-    console.log({ updateUserBody });
-    console.log({ user: req.user });
-
     const fullName = updateUserBody.fullName
       ? updateUserBody.fullName
       : req.user.fullName;
