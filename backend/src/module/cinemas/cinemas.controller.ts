@@ -16,6 +16,11 @@ export class CinemasController {
     return this.cinemasService.getCinemaInfoByChain(CinemaChainId);
   }
 
+  @Get(`get-schedule-by-chain`)
+  getScheduleByChain(@Query() cinemaChain: CinemaChainId) {
+    return this.cinemasService.getScheduleByChain(cinemaChain);
+  }
+
   @Get(`get-cinemas`)
   getCinema() {
     return this.cinemasService.getCinemas();

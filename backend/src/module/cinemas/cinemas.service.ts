@@ -24,6 +24,28 @@ export class CinemasService {
     return cinemaInfo;
   }
 
+  async getScheduleByChain(cinemaChain: CinemaChainId) {
+    const moviesWithSchedules = await this.prisma.movies.findMany({
+      include: {
+        schedules: {
+          include: {
+            cinemarooms: {
+              include: {
+                cinemas: {
+                  where: {
+                    cinemaChainId: +cinemaChain.cinemaId,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return moviesWithSchedules;
+  }
+
   async getCinemas() {
     const cinemas = await this.prisma.schedules.findMany({
       select: {
