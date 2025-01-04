@@ -10,9 +10,10 @@ import { UploadModule } from './module/upload/upload.module';
 import { BookingModule } from './module/booking/booking.module';
 import { MoviesModule } from './module/movies/movies.module';
 import { UsersModule } from './module/users/users.module';
+import { CinemasModule } from './module/cinemas/cinemas.module';
 
 @Module({
-  imports: [AuthModule, UploadModule, BookingModule, MoviesModule, UsersModule],
+  imports: [AuthModule, UploadModule, BookingModule, MoviesModule, UsersModule, CinemasModule],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService, PrismaService, JwtService],
 })

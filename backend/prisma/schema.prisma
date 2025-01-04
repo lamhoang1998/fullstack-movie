@@ -96,11 +96,11 @@ model schedules {
   created_at   DateTime?    @default(now()) @db.Timestamp(0)
   updated_at   DateTime?    @default(now()) @db.Timestamp(0)
   booking      booking[]
-  cinemarooms  cinemarooms? @relation(fields: [cinemaRoomId], references: [cinemaRoomId], onDelete: NoAction, onUpdate: NoAction, map: "schedules_ibfk_1")
-  movies       movies?      @relation(fields: [movieId], references: [movieId], onDelete: NoAction, onUpdate: NoAction, map: "schedules_ibfk_2")
+  cinemarooms  cinemarooms? @relation(fields: [cinemaRoomId], references: [cinemaRoomId], onDelete: Cascade, map: "schedules_ibfk_1")
+  movies       movies?      @relation(fields: [movieId], references: [movieId], onDelete: Cascade, map: "schedules_ibfk_2")
 
-  @@index([cinemaRoomId], map: "cinemaRoomId")
-  @@index([movieId], map: "movieId")
+  @@index([cinemaRoomId], map: "schedules_ibfk_1")
+  @@index([movieId], map: "schedules_ibfk_2")
 }
 
 model seats {
