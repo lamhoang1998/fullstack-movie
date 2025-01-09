@@ -5,3 +5,7 @@ export class CinemaChain {
 export class CinemaChainId {
   cinemaId: string;
 }
+
+export class MovieId {
+  movieId: string;
+}

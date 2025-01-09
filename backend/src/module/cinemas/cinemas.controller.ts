@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { CinemasService } from './cinemas.service';
-import { CinemaChain, CinemaChainId } from './dto/cinema-chain.dto';
+import { CinemaChain, CinemaChainId, MovieId } from './dto/cinema-chain.dto';
 
 @Controller('cinemas')
 export class CinemasController {
@@ -24,5 +24,10 @@ export class CinemasController {
   @Get(`get-cinemas`)
   getCinema() {
     return this.cinemasService.getCinemas();
+  }
+
+  @Get(`get-schedule-info`)
+  getScheduleInfo(@Query() movieId: MovieId) {
+    return this.cinemasService.getScheduleInfo(movieId);
   }
 }
