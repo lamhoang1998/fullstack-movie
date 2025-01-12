@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ResponseSuccessInterceptor } from './common/interceptors/response-success.interceptor';
 import { AllExceptionFilter } from './common/filter/all-exception.filter';
 import { RolesGuard } from './module/auth/roles.guard';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 declare global {
   namespace Express {
@@ -16,6 +17,26 @@ declare global {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const config = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        in: 'header',
+      },
+      'bearer-token',
+    )
+    .addTag('cats')
+    .build();
+
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
 
   const reflector = app.get(Reflector);
 

@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["omitApi"]
+  previewFeatures = ["omitApi" ]
 }
 
 datasource db {
@@ -14,7 +14,7 @@ model banners {
   banner     String?   @db.VarChar(255)
   created_at DateTime? @default(now()) @db.Timestamp(0)
   updated_at DateTime? @default(now()) @db.Timestamp(0)
-  movies     movies?   @relation(fields: [movieId], references: [movieId], onDelete: NoAction, onUpdate: NoAction, map: "banners_ibfk_1")
+  movies     movies?   @relation(fields: [movieId], references: [movieId], onDelete: Cascade, onUpdate: NoAction, map: "banners_ibfk_1")
 
   @@index([movieId], map: "movieId")
 }
@@ -26,8 +26,8 @@ model booking {
   seatId     Int?
   created_at DateTime?  @default(now()) @db.Timestamp(0)
   updated_at DateTime?  @default(now()) @db.Timestamp(0)
-  users      users?     @relation(fields: [userId], references: [userId], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_1")
-  schedules  schedules? @relation(fields: [scheduleId], references: [scheduleId], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_2")
+  users      users?     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade, map: "booking_ibfk_1")
+  schedules  schedules? @relation(fields: [scheduleId], references: [scheduleId], onDelete: Cascade, onUpdate: NoAction, map: "booking_ibfk_2")
   seats      seats?     @relation(fields: [seatId], references: [seatId], onDelete: NoAction, onUpdate: NoAction, map: "booking_ibfk_3")
 
   @@index([scheduleId], map: "scheduleId")

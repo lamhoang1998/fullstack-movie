@@ -16,6 +16,12 @@ import { RegisterDto } from './dto/register-auth.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ResponseMessage } from 'src/common/decorators/response-message.decorator';
 import { Request } from 'express';
+import {
+  ApiBearerAuth,
+  ApiHeader,
+  ApiHeaders,
+  ApiSecurity,
+} from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -57,8 +63,14 @@ export class AuthController {
 
   @Public()
   @ResponseMessage(`successfully refreshed tokens`)
+  @ApiBearerAuth('bearer-token')
+  @ApiHeader({
+    name: 'x-access-token',
+    description: 'access-token',
+  })
   @Post(`refresh-token`)
   async refreshToken(@Req() req: Request) {
+    console.log({ headers: req.headers });
     return this.authService.refreshToken(req);
   }
 }

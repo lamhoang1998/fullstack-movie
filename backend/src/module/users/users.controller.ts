@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put, Query, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserPerPage } from './dto/userPerPage.dto';
 import { SearchUser, SearchUserPerPage } from './dto/searchUser.dto';
 import { UpdateUserDto } from './dto/updateUserBody.dto';
 import { Request } from 'express';
+import { DeleteUser } from './dto/deleteUser.dto';
 
 @Controller('users')
 export class UsersController {
@@ -42,5 +43,10 @@ export class UsersController {
   @Put(`update-users`)
   updateUsers(@Body() updateUserBody: UpdateUserDto, @Req() req: Request) {
     return this.usersService.updateUsers(updateUserBody, req);
+  }
+
+  @Delete(`delete-users`)
+  deleteUsers(@Query() userId: DeleteUser) {
+    return this.usersService.deleteUsers(userId);
   }
 }

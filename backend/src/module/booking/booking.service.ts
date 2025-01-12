@@ -3,6 +3,7 @@ import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { PrismaService } from 'src/common/prisma/init.prisma';
 import { TicketListDto } from './dto/booking-ticket.dto';
 import { Request } from 'express';
+import { ScheduleIdDto } from './dto/ticket-list.dto';
 
 @Injectable()
 export class BookingService {
@@ -24,20 +25,24 @@ export class BookingService {
   async bookingTicket(bookingTicketBody: TicketListDto, req: Request) {
     const ticketBooked = await this.prisma.$transaction(
       async (prisma) => {
-        const booking = await prisma.booking.createMany({
-          data: bookingTicketBody.ticketList.map((ticket) => ({
-            userId: req.user.userId,
-            scheduleId: bookingTicketBody.scheduleId,
-            seatId: ticket.seatId,
-          })),
-        });
+        const bookings = [];
+        for (const ticket of bookingTicketBody.ticketList) {
+          const booking = await prisma.booking.create({
+            data: {
+              userId: req.user.userId, // From request
+              scheduleId: bookingTicketBody.scheduleId, // Common for all tickets
+              seatId: ticket.seatId,
+            },
+          });
+          bookings.push(booking); // Save each created booking
+        }
 
-        console.log({ booking });
+        console.log({ bookings });
 
         const seatIds = bookingTicketBody.ticketList.map(
           (ticket) => ticket.seatId,
         );
-        const updatedSeats = await this.prisma.seats.updateMany({
+        const updatedSeats = await prisma.seats.updateMany({
           where: {
             seatId: { in: seatIds },
             seatType: { not: 'booked' },
@@ -47,14 +52,12 @@ export class BookingService {
           },
         });
 
-        console.log({ updatedSeats });
-
-        return { booking, updatedSeats };
+        return { bookings };
       },
-      {
-        maxWait: 10000,
-        timeout: 2000,
-      },
+      // {
+      //   maxWait: 5000,
+      //   timeout: 10000,
+      // },
     );
 
     return ticketBooked;
@@ -84,5 +87,19 @@ export class BookingService {
     // ]);
 
     // return ticketBooked;
+  }
+
+  async ticketLists(scheduleId: ScheduleIdDto) {
+    const ticketLists = await this.prisma.schedules.findFirst({
+      where: {
+        scheduleId: +scheduleId.scheduleId,
+      },
+      include: {
+        cinemarooms: {
+          include: { seats: true },
+        },
+      },
+    });
+    return ticketLists;
   }
 }

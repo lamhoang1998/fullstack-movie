@@ -83,6 +83,7 @@ export class AuthService {
     const hashPassword = bcrypt.hashSync(registerBody.password, 10);
     console.log({ hashPassword });
 
+    //role_id is optional, if no role_id sent, just basically use the default value set in database
     const newUser = await this.prisma.users.create({
       data: {
         email: registerBody.email,

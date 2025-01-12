@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Put,
@@ -23,14 +24,38 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from '../auth/enum/role.enum';
 import { MovieByDateDto } from './dto/movie-by-date.dto';
 import { MovieQueryDto, UpdateMovieDto } from './dto/update-movie.dto';
+import { DeleteMovieDto } from './dto/delete-movie.dto';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiSecurity,
+} from '@nestjs/swagger';
+import { FileUploadDto } from './dto/file-upload.dto';
 
+@ApiBearerAuth('access-token')
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Roles(Role.Admin)
+  @ApiBearerAuth('access-token')
   @Post(`add-movies`)
   @UseInterceptors(FileInterceptor('images', { storage: storageImageCloud }))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Add movie',
+    type: AddMovieDto,
+    schema: {
+      type: 'object',
+      properties: {
+        movieName: {
+          type: 'string',
+          default: 'string',
+        },
+      },
+    },
+  })
   addMovie(
     @UploadedFile() file: Express.Multer.File,
     @Body() movieBody: AddMovieDto,
@@ -64,5 +89,11 @@ export class MoviesController {
     @Query() movie: MovieQueryDto,
   ) {
     return this.moviesService.updateMovies(file, movieBody, req, movie);
+  }
+
+  @Roles(Role.Admin)
+  @Delete(`delete-movies`)
+  deleteMovies(@Query() movieId: DeleteMovieDto) {
+    return this.moviesService.DeleteMovies(movieId);
   }
 }

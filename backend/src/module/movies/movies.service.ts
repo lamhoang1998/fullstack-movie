@@ -9,6 +9,7 @@ import { MovieByDateDto } from './dto/movie-by-date.dto';
 import { getPage, getPageSize, getTotalPage } from 'src/utils/page.utils';
 import { MovieQueryDto, UpdateMovieDto } from './dto/update-movie.dto';
 import { deleteCloudImage } from 'src/common/multer/upload-image-cloud.multer';
+import { DeleteMovieDto } from './dto/delete-movie.dto';
 
 @Injectable()
 export class MoviesService {
@@ -157,5 +158,12 @@ export class MoviesService {
     });
 
     return updatedMovie;
+  }
+
+  async DeleteMovies(movieId: DeleteMovieDto) {
+    const deleteMovie = this.prisma.movies.delete({
+      where: { movieId: +movieId.movieId },
+    });
+    return deleteMovie;
   }
 }

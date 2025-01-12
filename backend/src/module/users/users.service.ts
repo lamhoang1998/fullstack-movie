@@ -7,6 +7,7 @@ import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
 import { use } from 'passport';
 import { getPage, getPageSize, getTotalPage } from 'src/utils/page.utils';
+import { DeleteUser } from './dto/deleteUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -164,5 +165,12 @@ export class UsersService {
 
       return updatedUser;
     }
+  }
+
+  async deleteUsers(userId: DeleteUser) {
+    const deleteUser = await this.prisma.users.delete({
+      where: { userId: +userId.userId },
+    });
+    return deleteUser;
   }
 }
