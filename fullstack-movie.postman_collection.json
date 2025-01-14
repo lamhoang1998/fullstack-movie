@@ -1,0 +1,1152 @@
+{
+	"info": {
+		"_postman_id": "2e700329-42e0-44bd-bba4-e7b5f5c976de",
+		"name": "fullstack-movie",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36612821"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"lam3@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"lam3456@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"fullName\" : \"hoang lam six\",\r\n    \"phoneNumber\" : \"123449988880\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "avatar-local",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTMxMjk4MywiZXhwIjoxNzM1MzEzODgzfQ.feO03ynjPQsePVJV7hCnGo1KLPFFprmT7joJVlUL-Z4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/E:/pictures/sugar-tank-meme.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/upload/avatar-local",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"upload",
+						"avatar-local"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "avatar-cloud",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTM3NDE4NSwiZXhwIjoxNzM1Mzc1MDg1fQ._FZxihZrt-DpJPOHrMxGhbCyWsqhWp5Y-L7U_Bx-A1Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/E:/pictures/mypic2.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/upload/avatar-cloud",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"upload",
+						"avatar-cloud"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjY3MjEwOCwiZXhwIjoxNzM3Mjc2OTA4fQ.WU2mB_AdG0-dMVOc5E57BUFvg-SMk9gC06fQAD0x3Mk",
+						"type": "text"
+					},
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjY3MjEwOCwiZXhwIjoxNzM2NjcyMTIzfQ.y2GqaajkGn5ihQUGxH-AUTYxsX7o8o5Z46_cJ4ZtP9E",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/auth/refresh-token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"refresh-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-schedule",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjMyMzE3NSwiZXhwIjoxNzM2MzIzNzc1fQ.7oZetzqUC7xgv6scWJrYGTlorwBNyjnbpfsVk5RZj24",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"movieId\": 3,\r\n  \"showTime\": \"2025-01-12T14:50:50\",\r\n  \"cinemaRoomId\": 1,\r\n  \"ticketPrice\" : 75000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/booking/create-schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"booking",
+						"create-schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-movie",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTU1MDY3OSwiZXhwIjoxNzM1NTUxMjc5fQ.mcJpmvbtDVpCgYXvXqYCEKrLi2c7GFU8sjbv3Ym_G9U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "movieName",
+							"value": "deadpool",
+							"type": "text"
+						},
+						{
+							"key": "trailer",
+							"value": "sdsfdfldfld",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/E:/pictures/tải xuống.jfif"
+						},
+						{
+							"key": "desc",
+							"value": "ddfdfdf",
+							"type": "text"
+						},
+						{
+							"key": "releaseDate",
+							"value": "2000-12-12T14:50:50",
+							"type": "text"
+						},
+						{
+							"key": "rate",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "hot",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "nowShowing",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "comingSoon",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/movies/add-movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"movies",
+						"add-movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTU2OTY2MywiZXhwIjoxNzM1NTcwMjYzfQ.F_VblbokLN9XH946U3zChLPurdxEJmmXLEQOMRIZENc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/get-all-users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"get-all-users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-per-page",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTYzMTM1OCwiZXhwIjoxNzM1NjMxOTU4fQ.vtd9CJw1FE-nIYUJTmAvkl9YGe5DVP7RPnzYIOJSyJg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/get-users-per-page?page=4&pageSize=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"get-users-per-page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "4"
+						},
+						{
+							"key": "pageSize",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search-users-per-page",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTYzNTY1MywiZXhwIjoxNzM1NjM2MjUzfQ.IYbH-MkqrTokA6HpcjyqgpXnAQRsjfOM_q3aJAl9U8Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/search-users-per-page?userName=h&page=1&pageSize=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"search-users-per-page"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "h"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search-users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTY1MDU3OSwiZXhwIjoxNzM1NjUxMTc5fQ.p-b0RDmYpmgA6N0NR2VXMA_fWSHAvOGxykCyc26RcFk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/search-users?userName=l",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"search-users"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "l"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTY1NzQ1NywiZXhwIjoxNzM1NjU4MDU3fQ.5NzyI01Gyv5J72lkfqRTU2lK-a0YHxQdpKPaGCItmic",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/get-all-roles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"get-all-roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTcyMjU1MiwiZXhwIjoxNzM1NzIzMTUyfQ._m8xmJAHlLnVbWEwYTxE5f9GavwdMk1SVg-TcZd-f78",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"email\" : \"lam3@gmail.com\",\r\n    \"fullName\" : \"lam 3\",\r\n    \"phoneNumber\" : \"23993479394933\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/users/update-users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"update-users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTgwMzA5MywiZXhwIjoxNzM1ODAzNjkzfQ.fDm0TnHXzxT9u7pDMsA510Qujlb6Mauh3uvB-dibXFQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/get-user-info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"get-user-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-movies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczNTgwNDExOSwiZXhwIjoxNzM1ODA0NzE5fQ.q1OOThQwAC8cE_Bcyx-P9Un-3Y-NJhaGT0DwXh5A_JY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/movies/get-movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"movies",
+						"get-movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-movies-per-page",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNTk4MTA5NCwiZXhwIjoxNzM1OTgxNjk0fQ.EjaCCqJSLT2QnlCDBpWpi8lMpjWWOMUL2a4PSLtsCz0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/movies/get-movies-per-page?page=1&pageSize=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"movies",
+						"get-movies-per-page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-movie",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNTkxNjUzNCwiZXhwIjoxNzM1OTE3MTM0fQ.mnE0Y3OK7ztxsovAeCbH1OOARc1U-epvg3pMoNPAfTo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "movieName",
+							"value": "wolverine",
+							"type": "text"
+						},
+						{
+							"key": "trailer",
+							"value": "new movie",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/E:/pictures/kim-1413271010374-crop-1413271024296.jpg",
+							"disabled": true
+						},
+						{
+							"key": "desc",
+							"value": "ddfdfdf",
+							"type": "text"
+						},
+						{
+							"key": "releaseDate",
+							"value": "2025-03-11T14:50:00",
+							"type": "text"
+						},
+						{
+							"key": "rate",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "hot",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "nowShowing",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "comingSoon",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/movies/update-movies?movieId=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"movies",
+						"update-movies"
+					],
+					"query": [
+						{
+							"key": "movieId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-movies-by-date",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNTg5MTE0OCwiZXhwIjoxNzM1ODkxNzQ4fQ.UhKEelZ4-1l8Qz_luuHY9Q2yv0wBggiRwhwgZEIdiyc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/movies/get-movies-by-date?page=1&pageSize=2&startDate=2024-12-05&endDate=2024-12-12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"movies",
+						"get-movies-by-date"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "2"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-12-05"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-cinemas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNTk4MTM4NywiZXhwIjoxNzM1OTgxOTg3fQ.QqETgZ2tgp-hy0DeC2RQ9keFrfjDNDG-zggKjjll9c4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cinemas/get-cinemas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cinemas",
+						"get-cinemas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-cinema-chain-info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNTk5MzYxNywiZXhwIjoxNzM1OTk0MjE3fQ.r3sHc0sThnlRnGlZABJyXpC9VwWpcw0XLzOBjoqlli4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cinemas/get-cinema-chain-info?cinema=bhd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cinemas",
+						"get-cinema-chain-info"
+					],
+					"query": [
+						{
+							"key": "cinema",
+							"value": "bhd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-cinema-info-by-chain",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNTk5NTQ3MiwiZXhwIjoxNzM1OTk2MDcyfQ.MpM91nczXqzAWz6fxtORGH95FFqYqevvK3hEacUiJYs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cinemas/get-cinema-info-by-chain?cinemaId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cinemas",
+						"get-cinema-info-by-chain"
+					],
+					"query": [
+						{
+							"key": "cinemaId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-schedule-by-chain",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjIzNjg2MSwiZXhwIjoxNzM2MjM3NDYxfQ.5BoxJb9hdFckU2z8SC09L1K68v8omaS-e8-dmVJWLR8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cinemas/get-schedule-by-chain?cinemaId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cinemas",
+						"get-schedule-by-chain"
+					],
+					"query": [
+						{
+							"key": "cinemaId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-schedule-info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjIzOTM3MiwiZXhwIjoxNzM2MjM5OTcyfQ.oFhKqbmqZVuFzq4rNmS5sibVL2QmH_qsuU0vGiD-JjI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cinemas/get-schedule-info?movieId=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cinemas",
+						"get-schedule-info"
+					],
+					"query": [
+						{
+							"key": "movieId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "booking-ticket",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjQzODY5NiwiZXhwIjoxNzM2NDM5Mjk2fQ.wAhNsyxlHZ62bJ-7ydl9GM0jXJFU907X4yg5NLeZEaA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"scheduleId\": 7,\r\n    \"ticketList\" : [\r\n        {\r\n          \"seatId\" : 5\r\n\r\n        },\r\n        {\"seatId\": 6}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/booking/booking-ticket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"booking",
+						"booking-ticket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ticket-list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjQzMDA0MCwiZXhwIjoxNzM2NDMwNjQwfQ.4AVgpLleoZmuXVjofjzYcmqRaaUeA1F4xxQgHOkxnU0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/booking/ticket-list?scheduleId=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"booking",
+						"ticket-list"
+					],
+					"query": [
+						{
+							"key": "scheduleId",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjQ5NTcwOSwiZXhwIjoxNzM2NDk2MzA5fQ.OWcIUztgx7CbHi-vCkB1lg6F4-jYe-oz7viRyqiF4pI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/delete-users?userId=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"delete-users"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-movies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjUxMzAwOSwiZXhwIjoxNzM2NTEzNjA5fQ.5sR77nDnpdbZINUVHAwXY14hVvjKvf8pUzaDHGpYhwo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/movies/delete-movies?movieId=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"movies",
+						"delete-movies"
+					],
+					"query": [
+						{
+							"key": "movieId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/cinemas/get-cinema-chain-info?cinema=bhd",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTczNjMyMzE3NSwiZXhwIjoxNzM2MzIzNzc1fQ.7oZetzqUC7xgv6scWJrYGTlorwBNyjnbpfsVk5RZj24",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/cinemas/get-cinema-chain-info?cinema=bhd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"cinemas",
+						"get-cinema-chain-info"
+					],
+					"query": [
+						{
+							"key": "cinema",
+							"value": "bhd"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
