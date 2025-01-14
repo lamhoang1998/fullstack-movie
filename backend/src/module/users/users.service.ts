@@ -137,6 +137,10 @@ export class UsersService {
       ? updateUserBody.phoneNumber
       : req.user.phoneNumber;
 
+    const role_id = updateUserBody.role_id
+      ? updateUserBody.role_id
+      : req.user.role_id;
+
     if (updateUserBody.password) {
       const hashPassword = bcrypt.hashSync(updateUserBody.password, 10);
 
@@ -147,6 +151,7 @@ export class UsersService {
           fullName: fullName,
           phoneNumber: phoneNumber,
           password: hashPassword,
+          role_id: role_id,
         },
         omit: { password: true },
       });
@@ -159,6 +164,7 @@ export class UsersService {
           email: email,
           fullName: fullName,
           phoneNumber: phoneNumber,
+          role_id: role_id,
         },
         omit: { password: true },
       });

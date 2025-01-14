@@ -33,13 +33,13 @@ import {
 } from '@nestjs/swagger';
 import { FileUploadDto } from './dto/file-upload.dto';
 
-@ApiBearerAuth('access-token')
+@ApiBearerAuth('bearer-token')
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Roles(Role.Admin)
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth('bearer-token')
   @Post(`add-movies`)
   @UseInterceptors(FileInterceptor('images', { storage: storageImageCloud }))
   @ApiConsumes('multipart/form-data')
