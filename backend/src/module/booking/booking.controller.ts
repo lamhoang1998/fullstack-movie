@@ -5,7 +5,9 @@ import { ResponseMessage } from 'src/common/decorators/response-message.decorato
 import { TicketListDto } from './dto/booking-ticket.dto';
 import { Request } from 'express';
 import { ScheduleIdDto } from './dto/ticket-list.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth(`bearer-token`)
 @Controller('booking')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}

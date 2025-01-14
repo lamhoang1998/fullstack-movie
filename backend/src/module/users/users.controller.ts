@@ -5,7 +5,9 @@ import { SearchUser, SearchUserPerPage } from './dto/searchUser.dto';
 import { UpdateUserDto } from './dto/updateUserBody.dto';
 import { Request } from 'express';
 import { DeleteUser } from './dto/deleteUser.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth(`bearer-token`)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

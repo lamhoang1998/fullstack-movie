@@ -1,7 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { CinemasService } from './cinemas.service';
 import { CinemaChain, CinemaChainId, MovieId } from './dto/cinema-chain.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth(`bearer-token`)
 @Controller('cinemas')
 export class CinemasController {
   constructor(private readonly cinemasService: CinemasService) {}
